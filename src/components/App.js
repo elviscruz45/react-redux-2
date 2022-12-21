@@ -1,54 +1,72 @@
-import React from "react"
+import React, { Component } from 'react';
+import axios from "axios"
+
+class App extends Component {
+	constructor() {
+		super();
+		this.state = {
+			usuarios: []
+		}
+	}
+
+  async componentDidMount(){
+    const respuesta =await axios.get("https://jsonplaceholder.typicode.com/users");
+    console.log("respuesta:",respuesta);
+    this.setState({
+      usuarios:[
+        {
+          nombre:"Rodolfo",
+          correo:"Rodolfo@saldivar.com",
+          enlace:"Rodolfo.com"
+        },
+        {
+          nombre:"platzi",
+          correo:"platzi@platzi.com",
+          enlace:"platzi.com"
+        }
+      ]
+    })
+  }
 
 
-const App=()=> {
-  const ponerFilas = () => [
-		<tr>
-			<td>
-				Rodolfo
+	ponerFilas = () => this.state.usuarios.map((usuario) => (
+		<tr key={usuario.nombre}>
+			<td >
+				{ usuario.nombre }
 			</td>
 			<td>
-				Rodolfo@platzi.com
+				{ usuario.correo }
 			</td>
 			<td>
-				Rodolfo.com
-			</td>
-		</tr>,
-		<tr>
-			<td>
-				Rodolfo
-			</td>
-			<td>
-				Rodolfo@platzi.com
-			</td>
-			<td>
-				Rodolfo.com
+				{ usuario.enlace }
 			</td>
 		</tr>
-	];
+	))
 
-	return (
-		<div className="margen">
-			<table className="tabla">
-				<thead>
-					<tr>
-						<th>
-							Nombre
-						</th>
-						<th>
-							Correo
-						</th>
-						<th>
-							Enlace
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{ ponerFilas() }
-				</tbody>
-			</table>
-		</div>
-	)
-};
+	render() {
+		return (
+			<div className="margen">
+				<table className="tabla">
+					<thead>
+						<tr>
+							<th>
+								Nombre
+							</th>
+							<th>
+								Correo
+							</th>
+							<th>
+								Enlace
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{ this.ponerFilas() }
+					</tbody>
+				</table>
+			</div>
+		)
+	}
+}
 
-export {App};
+export {App}
