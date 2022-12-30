@@ -5,7 +5,10 @@ import { Link } from "react-router-dom"
 const Tabla=(props)=>{
 
 	const ponerFilas = () => props.usuarios.map((usuario,key) => (
-		<tr key={usuario.id}>
+		<tr key={key}>
+            <td >
+                {key}
+			</td>
 			<td >
 				{ usuario.name }
 			</td>
@@ -28,6 +31,9 @@ const Tabla=(props)=>{
         <table className="tabla">
             <thead>
                 <tr>
+                    <th>
+                        Id
+                    </th>
                     <th>
                         Nombre
                     </th>
@@ -53,3 +59,4 @@ const mapStateToProps=(reducers)=>{
 
 
 export default connect(mapStateToProps)(Tabla)
+

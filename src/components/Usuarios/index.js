@@ -21,7 +21,6 @@ class Usuarios extends Component {
     // this.setState({
     //   usuarios:respuesta.data
     // })
-
     if (!this.props.usuarios.length){
         this.props.traerTodos()
     }
@@ -31,16 +30,13 @@ class Usuarios extends Component {
     if (this.props.cargando){
         return <Spinner/>
     }
-
     if (this.props.error){
         return <Fatal mensaje={this.props.error}/>
     }
-    
+    //console.log(this.props)
     return <Tabla />
   }
-  
 	render() {
-         console.log(this.props)
         // console.log(this.props.error)
 
 		return (
