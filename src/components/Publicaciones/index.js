@@ -8,8 +8,10 @@ import * as usuariosActions from "../../actions/usuariosActions"
 import * as publicacionesActions from "../../actions/publicacionesActions"
 import { usuariosReductor } from "../../reducers/usuariosReducers"
 
+
 const {traerTodos:usuariosTraerTodos}=usuariosActions
-const {traerPorUsuario:publicacionesTraerPorUsuario}=publicacionesActions
+const {traerPorUsuario:publicacionesTraerPorUsuario,
+        abrirCerrar}=publicacionesActions
 
 const Publicaciones=(props)=>  {
     const {key}=useParams()
@@ -25,19 +27,14 @@ const Publicaciones=(props)=>  {
                 return
             }
         }
-
         traerTodosUsuarios()
-
         async function traerPorUsuario(){
-
             if(!("publicaciones_key" in props.usuariosReductor.usuarios[key])){
                 await props.publicacionesTraerPorUsuario(key)
             }
         }
         traerPorUsuario()
-
     },[])
-
     const  ponerUsuario=()=>{
         if (props.usuariosReductor.error){
             return <Fatal mensaje={props.usuariosReductor.error}/>
@@ -52,7 +49,6 @@ const Publicaciones=(props)=>  {
             </h1>
         )
     }
-
     const ponerPublicaciones=()=>{
         const {
             usuariosReductor,
@@ -72,32 +68,39 @@ const Publicaciones=(props)=>  {
 
         if (!publicaciones.length) return
         if(!("publicaciones_key" in usuarios[key])) return
-
         const {publicaciones_key}=usuarios[key]
 
-        return(publicaciones[publicaciones_key].map((publicaciones,key)=>(
-            <div className="pub_titulo" key={key}>
-                <h2>
-                    {publicaciones.title}
-                </h2>
-                <h3>
-                    {publicaciones.body}
-                </h3>
-            </div>
-        ))
+        const mostrarInfo=(publicaciones,pub_key)=>(
+            (publicaciones.map((publicacion,com_key)=>(
+                <div className="pub_titulo"
+                key={publicacion.id}
+                onClick={()=>props.abrirCerrar(pub_key,com_key)}
+                >
+                    <h2>
+                        {publicacion.title}
+                    </h2>
+                    <h3>
+                        {publicacion.body}
+                    </h3>
+                    {
+                        (publicacion.abierto)?"abierto":"cerrado"
+                    }
+                </div>
+            ))
+            )
+        )
+        return mostrarInfo(
+            publicaciones[publicaciones_key],
+            publicaciones_key
         )
     }
     return <div>
-        {console.log(props)}
         {ponerUsuario()}
         {ponerPublicaciones()}
         </div>
 }
 
-
-
 // Redux
-
 
 const mapStateToProps=({usuariosReductor,publicacionesReductor})=>{
     return {
@@ -106,10 +109,10 @@ const mapStateToProps=({usuariosReductor,publicacionesReductor})=>{
     }
 }
 
-
 const mapDispatchToProps={
     usuariosTraerTodos,
-    publicacionesTraerPorUsuario
+    publicacionesTraerPorUsuario,
+    abrirCerrar
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Publicaciones)

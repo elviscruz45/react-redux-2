@@ -24,7 +24,7 @@ var publicacionesReductor = function publicacionesReductor() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case _publicacionesTypes.TRAER_POR_USUARIO:
+    case _publicacionesTypes.ACTUALIZAR:
       return _objectSpread({}, state, {
         publicaciones: action.payload,
         cargando: false,
