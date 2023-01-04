@@ -6,7 +6,7 @@ import Fatal from "../General/Fatal"
 import * as usuariosActions from "../../actions/usuariosActions"
 import * as publicacionesActions from "../../actions/publicacionesActions"
 import { usuariosReductor } from "../../reducers/usuariosReducers"
-import { Comentarios } from "./Comentarios"
+import Comentarios  from "./Comentarios"
 
 const {traerTodos:usuariosTraerTodos}=usuariosActions
 const {traerPorUsuario:publicacionesTraerPorUsuario,
@@ -66,6 +66,7 @@ const Publicaciones=(props)=>  {
         if (!publicaciones.length) return
         if(!("publicaciones_key" in usuarios[key])) return
         const {publicaciones_key}=usuarios[key]
+
         const mostrarInfo=(publicaciones,pub_key)=>(
             (publicaciones.map((publicacion,com_key)=>(
                 <div className="pub_titulo"
@@ -90,8 +91,8 @@ const Publicaciones=(props)=>  {
             if(!comentarios.length){
                 props.traerComentarios(pub_key,com_key)
             }
-            
         }
+
         return mostrarInfo(
             publicaciones[publicaciones_key],
             publicaciones_key
@@ -102,7 +103,6 @@ const Publicaciones=(props)=>  {
         {ponerPublicaciones()}
         </div>
 }
-
 // Redux
 
 const mapStateToProps=({usuariosReductor,publicacionesReductor})=>{

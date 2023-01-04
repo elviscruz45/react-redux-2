@@ -16,7 +16,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var INITIAL_STATE = {
   publicaciones: [],
   cargando: false,
-  error: ""
+  error: "",
+  com_cargando: false,
+  com_error: ""
 };
 
 var publicacionesReductor = function publicacionesReductor() {
@@ -40,6 +42,24 @@ var publicacionesReductor = function publicacionesReductor() {
       return _objectSpread({}, state, {
         error: action.payload,
         cargando: false
+      });
+
+    case _publicacionesTypes.COM_ACTUALIZAR:
+      return _objectSpread({}, state, {
+        publicaciones: action.payload,
+        com_cargando: false,
+        com_error: ""
+      });
+
+    case _publicacionesTypes.COM_CARGANDO:
+      return _objectSpread({}, state, {
+        com_cargando: true
+      });
+
+    case _publicacionesTypes.COM_ERROR:
+      return _objectSpread({}, state, {
+        com_error: action.payload,
+        com_cargando: false
       });
 
     default:

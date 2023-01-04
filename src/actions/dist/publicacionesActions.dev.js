@@ -130,12 +130,16 @@ var traerComentarios = function traerComentarios(pub_key, com_key) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
+            dispatch({
+              type: _publicacionesTypes.COM_CARGANDO
+            });
             publicaciones = getState().publicacionesReductor.publicaciones;
             seleccionada = publicaciones[pub_key][com_key];
-            _context2.next = 4;
+            _context2.prev = 3;
+            _context2.next = 6;
             return regeneratorRuntime.awrap(_axios["default"].get("https://jsonplaceholder.typicode.com/comments?postId=".concat(seleccionada.id)));
 
-          case 4:
+          case 6:
             respuesta = _context2.sent;
             actualizada = _objectSpread({}, seleccionada, {
               comentarios: respuesta.data
@@ -144,16 +148,27 @@ var traerComentarios = function traerComentarios(pub_key, com_key) {
             publicaciones_actualizadas[pub_key] = _toConsumableArray(publicaciones[pub_key]);
             publicaciones_actualizadas[pub_key][com_key] = actualizada;
             dispatch({
-              type: _publicacionesTypes.ACTUALIZAR,
+              type: _publicacionesTypes.COM_ACTUALIZAR,
               payload: publicaciones_actualizadas
             });
+            _context2.next = 18;
+            break;
 
-          case 10:
+          case 14:
+            _context2.prev = 14;
+            _context2.t0 = _context2["catch"](3);
+            console.log(_context2.t0.message);
+            dispatch({
+              type: _publicacionesTypes.COM_ERROR,
+              payload: "Comentarios no disponibles"
+            });
+
+          case 18:
           case "end":
             return _context2.stop();
         }
       }
-    });
+    }, null, null, [[3, 14]]);
   };
 };
 
