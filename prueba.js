@@ -1,110 +1,84 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Spinner from '../General/Spinner';
-import Fatal from '../General/Fatal';
+const  publicaciones=[
+[	{
+	  "postId": 12,
+	  "id": 56,
+	  "name": "et dolorem corrupti sed molestias",
+	  "email": "Vince_Crist@heidi.biz",
+	  "body": "cum esse odio nihil reiciendis illum quaerat\nest facere quia\noccaecati sit totam fugiat in beatae\nut occaecati unde vitae nihil quidem consequatur"
+	},
+	{
+	  "postId": 12,
+	  "id": 57,
+	  "name": "qui quidem sed",
+	  "email": "Darron.Nikolaus@eulah.me",
+	  "body": "dolorem facere itaque fuga odit autem\nperferendis quisquam quis corrupti eius dicta\nrepudiandae error esse itaque aut\ncorrupti sint consequatur aliquid"
+	},
+	{
+	  "postId": 12,
+	  "id": 58,
+	  "name": "sint minus reiciendis qui perspiciatis id",
+	  "email": "Ezra_Abshire@lyda.us",
+	  "body": "veritatis qui nihil\nquia reprehenderit non ullam ea iusto\nconsectetur nam voluptas ut temporibus tempore provident error\neos et nisi et voluptate"
+	},
+	{
+	  "postId": 12,
+	  "id": 59,
+	  "name": "quis ducimus distinctio similique et illum minima ab libero",
+	  "email": "Jameson@tony.info",
+	  "body": "cumque molestiae officia aut fugiat nemo autem\nvero alias atque sed qui ratione quia\nrepellat vel earum\nea laudantium mollitia"
+	},
+	{
+	  "postId": 12,
+	  "id": 60,
+	  "name": "expedita libero quos cum commodi ad",
+	  "email": "Americo@estrella.net",
+	  "body": "error eum quia voluptates alias repudiandae\naccusantium veritatis maiores assumenda\nquod impedit animi tempore veritatis\nanimi et et officiis labore impedit blanditiis repudiandae"
+	}],
+	[	{
+		"postId": 112,
+		"id": 516,
+		"name": "aaaet dolorem corrupti sed molestias",
+		"email": "aaaVince_Crist@heidi.biz",
+		"body": "aaacum esse odio nihil reiciendis illum quaerat\nest facere quia\noccaecati sit totam fugiat in beatae\nut occaecati unde vitae nihil quidem consequatur"
+	  },
+	  {
+		"postId": 112,
+		"id": 517,
+		"name": "aaaqui quidem sed",
+		"email": "aaaDarron.Nikolaus@eulah.me",
+		"body": "aaadolorem facere itaque fuga odit autem\nperferendis quisquam quis corrupti eius dicta\nrepudiandae error esse itaque aut\ncorrupti sint consequatur aliquid"
+	  },
+	  {
+		"postId": 112,
+		"id": 518,
+		"name": "aaasint minus reiciendis qui perspiciatis id",
+		"email": "aaaEzra_Abshire@lyda.us",
+		"body": "aaaveritatis qui nihil\nquia reprehenderit non ullam ea iusto\nconsectetur nam voluptas ut temporibus tempore provident error\neos et nisi et voluptate"
+	  },
+	  {
+		"postId": 112,
+		"id": 519,
+		"name": "aaaquis ducimus distinctio similique et illum minima ab libero",
+		"email": "aaaJameson@tony.info",
+		"body": "aaacumque molestiae officia aut fugiat nemo autem\nvero alias atque sed qui ratione quia\nrepellat vel earum\nea laudantium mollitia"
+	  },
+	  {
+		"postId": 112,
+		"id": 610,
+		"name": "aaaexpedita libero quos cum commodi ad",
+		"email": "aaaAmerico@estrella.net",
+		"body": "aaaerror eum quia voluptates alias repudiandae\naccusantium veritatis maiores assumenda\nquod impedit animi tempore veritatis\nanimi et et officiis labore impedit blanditiis repudiandae"
+	  }]
+]
 
-import * as usuariosActions from '../../actions/usuariosActions';
-import * as publicacionesActions from '../../actions/publicacionesActions';
+console.log(...publicaciones[1])
 
-const { traerTodos: usuariosTraerTodos } = usuariosActions;
-const { traerPorUsuario: publicacionesTraerPorUsuario } = publicacionesActions;
+const publicaciones_actualizadas=[...publicaciones]
 
-class Publicaciones extends Component {
+publicaciones_actualizadas[pub_key]=[...publicaciones[pub_key]]
+publicaciones_actualizadas[pub_key][com_key]=actualizada
 
-	async componentDidMount() {
-		const {
-			usuariosTraerTodos,
-			match: { params: { key } },
-			publicacionesTraerPorUsuario
-		} = this.props;
+const lista1=[1,2,3]
+lista1[0]=100
 
-		if (!this.props.usuariosReducer.usuarios.length) {
-			await usuariosTraerTodos();
-		}
-		if (this.props.usuariosReducer.error) {
-			return;
-		}
-		if (!('publicaciones_key' in this.props.usuariosReducer.usuarios[key])) {
-			await publicacionesTraerPorUsuario(key);
-		}
-	}
-
-	ponerUsuario = () => {
-		const {
-			match: { params: { key } },
-			usuariosReducer
-		} = this.props;
-
-		if (usuariosReducer.error) {
-			return <Fatal mensaje={ usuariosReducer.error } />;
-		}
-		if (!usuariosReducer.usuarios.length || usuariosReducer.cargando) {
-			return <Spinner />
-		}
-
-		const nombre = usuariosReducer.usuarios[key].name;
-
-		return (
-			<h1>
-				Publicaciones de { nombre }
-			</h1>
-		);
-	};
-
-	ponerPublicaciones = () => {
-		const {
-			usuariosReducer,
-			usuariosReducer: { usuarios },
-			publicacionesReducer,
-			publicacionesReducer: { publicaciones },
-			match: { params: { key } }
-		} = this.props;
-
-		if (!usuarios.length) return;
-		if (usuariosReducer.error) return;
-		if (publicacionesReducer.cargando) {
-			return <Spinner />;
-		}
-		if (publicacionesReducer.error) {
-			return <Fatal mensaje={ publicacionesReducer.error } />
-		}
-		if (!publicaciones.length) return;
-		if (!('publicaciones_key' in usuarios[key])) return;
-
-		const { publicaciones_key } = usuarios[key];
-		return publicaciones[publicaciones_key].map((publicacion) => (
-			<div
-				key={publicacion.id}
-				className='pub_titulo'
-				onClick={ ()=>alert(publicacion.id) }
-			>
-				<h2>
-					{ publicacion.title }
-				</h2>
-				<h3>
-					{ publicacion.body }
-				</h3>
-			</div>
-		));
-	};
-
-	render() {
-		return (
-			<div>
-				{ this.ponerUsuario() }
-				{ this.ponerPublicaciones() }
-			</div>
-		);
-	}
-}
-
-const mapStateToProps = ({ usuariosReducer, publicacionesReducer }) => {
-	return { usuariosReducer, publicacionesReducer };
-};
-
-const mapDispatchToProps = {
-	usuariosTraerTodos,
-	publicacionesTraerPorUsuario
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Publicaciones);
+console.log(lista1)

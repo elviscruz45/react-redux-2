@@ -5,7 +5,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.abrirCerrar = exports.traerPorUsuario = void 0;
+exports.traerComentarios = exports.abrirCerrar = exports.traerPorUsuario = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -122,3 +122,39 @@ var abrirCerrar = function abrirCerrar(pub_key, com_key) {
 };
 
 exports.abrirCerrar = abrirCerrar;
+
+var traerComentarios = function traerComentarios(pub_key, com_key) {
+  return function _callee2(dispatch, getState) {
+    var publicaciones, seleccionada, respuesta, actualizada, publicaciones_actualizadas;
+    return regeneratorRuntime.async(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            publicaciones = getState().publicacionesReductor.publicaciones;
+            seleccionada = publicaciones[pub_key][com_key];
+            _context2.next = 4;
+            return regeneratorRuntime.awrap(_axios["default"].get("https://jsonplaceholder.typicode.com/comments?postId=".concat(seleccionada.id)));
+
+          case 4:
+            respuesta = _context2.sent;
+            actualizada = _objectSpread({}, seleccionada, {
+              comentarios: respuesta.data
+            });
+            publicaciones_actualizadas = _toConsumableArray(publicaciones);
+            publicaciones_actualizadas[pub_key] = _toConsumableArray(publicaciones[pub_key]);
+            publicaciones_actualizadas[pub_key][com_key] = actualizada;
+            dispatch({
+              type: _publicacionesTypes.ACTUALIZAR,
+              payload: publicaciones_actualizadas
+            });
+
+          case 10:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    });
+  };
+};
+
+exports.traerComentarios = traerComentarios;
