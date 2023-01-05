@@ -17,8 +17,9 @@ var INITIAL_STATE = {
   tareas: {},
   cargando: false,
   error: "",
-  usuario_id: "1",
-  titulo: ""
+  usuario_id: "",
+  titulo: "",
+  regresar: false
 };
 
 var tareasReductor = function tareasReductor() {
@@ -30,7 +31,8 @@ var tareasReductor = function tareasReductor() {
       return _objectSpread({}, state, {
         tareas: action.payload,
         cargando: false,
-        error: ""
+        error: "",
+        regresar: false
       });
 
     case _tareasTypes.CARGANDO:
@@ -44,14 +46,24 @@ var tareasReductor = function tareasReductor() {
         cargando: false
       });
 
-    case "cambio_usuario_id":
+    case _tareasTypes.CAMBIO_USUARIO_ID:
       return _objectSpread({}, state, {
         usuario_id: action.payload
       });
 
-    case "cambio_titulo":
+    case _tareasTypes.CAMBIO_TITULO:
       return _objectSpread({}, state, {
         titulo: action.payload
+      });
+
+    case _tareasTypes.AGREGADA:
+      return _objectSpread({}, state, {
+        tareas: {},
+        cargando: false,
+        error: "",
+        regresar: true,
+        usuario_id: "",
+        titulo: ""
       });
 
     default:
