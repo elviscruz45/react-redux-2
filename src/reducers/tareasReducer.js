@@ -3,7 +3,9 @@ import { TRAER_TODAS,CARGANDO,ERROR } from "../types/tareasTypes";
 const INITIAL_STATE = {
 	tareas: {},
 	cargando:false,
-	error:""
+	error:"",
+    usuario_id:"1",
+    titulo:""
 };
 
 const tareasReductor= (state = INITIAL_STATE, action) => {
@@ -18,6 +20,12 @@ const tareasReductor= (state = INITIAL_STATE, action) => {
 			return {...state,cargando:true}
 		case ERROR:
 			return {...state,error:action.payload,cargando:false}
+        case "cambio_usuario_id":
+            return {...state,
+                    usuario_id:action.payload}
+        case "cambio_titulo":
+            return {...state,
+                    titulo:action.payload}
 		default:
 			return state;
 	};

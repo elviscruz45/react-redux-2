@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.traerTodas = void 0;
+exports.cambioTitulo = exports.cambioUsuarioId = exports.traerTodas = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -63,3 +63,25 @@ var traerTodas = function traerTodas() {
 };
 
 exports.traerTodas = traerTodas;
+
+var cambioUsuarioId = function cambioUsuarioId(usuario_id) {
+  return function (dispatch) {
+    dispatch({
+      type: "cambio_usuario_id",
+      payload: usuario_id
+    });
+  };
+};
+
+exports.cambioUsuarioId = cambioUsuarioId;
+
+var cambioTitulo = function cambioTitulo(titulo) {
+  return function (dispatch) {
+    dispatch({
+      type: "cambio_titulo",
+      payload: titulo
+    });
+  };
+};
+
+exports.cambioTitulo = cambioTitulo;

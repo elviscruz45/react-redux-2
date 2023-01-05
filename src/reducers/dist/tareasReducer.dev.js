@@ -16,7 +16,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var INITIAL_STATE = {
   tareas: {},
   cargando: false,
-  error: ""
+  error: "",
+  usuario_id: "1",
+  titulo: ""
 };
 
 var tareasReductor = function tareasReductor() {
@@ -40,6 +42,16 @@ var tareasReductor = function tareasReductor() {
       return _objectSpread({}, state, {
         error: action.payload,
         cargando: false
+      });
+
+    case "cambio_usuario_id":
+      return _objectSpread({}, state, {
+        usuario_id: action.payload
+      });
+
+    case "cambio_titulo":
+      return _objectSpread({}, state, {
+        titulo: action.payload
       });
 
     default:

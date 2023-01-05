@@ -4,6 +4,7 @@ import { Menu } from "./Menu"
 import  Usuarios  from "./Usuarios"
 import  Publicaciones  from "./Publicaciones"
 import Tareas from "./Tareas"
+import TareasGuardar from "./Tareas/Guardar"
 
 
 const App = ()=>(
@@ -17,6 +18,7 @@ const App = ()=>(
       <Route path="/" element={<Usuarios/>}/>
       <Route path="/tareas" element={<Tareas/>}/>
       <Route path="/publicaciones/:key" element={<Publicaciones/>} />
+      <Route path="/tareas/guardar" element={<TareasGuardar/>}/>
   </Routes>
   </div>
 
