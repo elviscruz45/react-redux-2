@@ -19,6 +19,8 @@ const App = ()=>(
       <Route path="/tareas" element={<Tareas/>}/>
       <Route path="/publicaciones/:key" element={<Publicaciones/>} />
       <Route path="/tareas/guardar" element={<TareasGuardar/>}/>
+      <Route path="/tareas/guardar/:usu_id/:tar_id" element={<TareasGuardar/>}/>
+
   </Routes>
   </div>
 

@@ -3,10 +3,28 @@ import {connect} from "react-redux"
 import Spinner from "../General/Spinner"
 import Fatal from "../General/Fatal"
 import { Navigate } from "react-router-dom"
+import withRouter from "./withRouter"
+
 
 import * as tareasActions from "../../actions/tareasActions"
 
 class Guardar extends Component {
+    componentDidMount(){
+        console.log("Props: ",this.props)
+         const {
+             params:{usu_id,tar_id},
+             tareas,
+             cambioUsuarioId,
+             cambioTitulo
+         }=this.props
+
+         if (usu_id && tar_id){
+             const tarea=tareas[usu_id][tar_id]
+             cambioUsuarioId(tarea.userId)
+             cambioTitulo(tarea.title)
+         }
+    }
+
     cambioUsuarioId=(event)=>{
         this.props.cambioUsuarioId(event.target.value)
     }
@@ -14,13 +32,30 @@ class Guardar extends Component {
         this.props.cambioTitulo(event.target.value)
     }
     guardar=()=>{
-        const {usuario_id,titulo,agregar}=this.props
+        const {params:{usu_id,tar_id},
+                tareas,
+                usuario_id,
+                titulo,
+                agregar,
+                editar}=this.props
+
         const nueva_tarea={
             userId:usuario_id,
             title:titulo,
             complete:false
         }
-        agregar(nueva_tarea)
+        if (usu_id && tar_id){
+            const tarea=tareas[usu_id][tar_id]
+            const tarea_editada={
+                ...nueva_tarea,
+                completed:tarea.completed,
+                id:tarea.id
+            }
+            editar(tarea_editada)
+        }
+        else{
+            agregar(nueva_tarea)
+        }
     }
     deshabilitar=()=>{
         const {usuario_id,titulo,cargando}=this.props
@@ -78,5 +113,5 @@ class Guardar extends Component {
 
 const mapStateToProps=({tareasReductor})=>tareasReductor
 
-export default connect(mapStateToProps,tareasActions)(Guardar)
+export default withRouter(connect(mapStateToProps,tareasActions)(Guardar))
 

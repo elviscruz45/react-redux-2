@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.agregar = exports.cambioTitulo = exports.cambioUsuarioId = exports.traerTodas = void 0;
+exports.editar = exports.agregar = exports.cambioTitulo = exports.cambioUsuarioId = exports.traerTodas = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -129,3 +129,11 @@ var agregar = function agregar(nueva_tarea) {
 };
 
 exports.agregar = agregar;
+
+var editar = function editar(tarea_editada) {
+  return function (dispatch) {
+    console.log(tarea_editada);
+  };
+};
+
+exports.editar = editar;

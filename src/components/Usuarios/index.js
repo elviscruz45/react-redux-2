@@ -37,7 +37,6 @@ class Usuarios extends Component {
     return <Tabla />
   }
 	render() {
-        // console.log(this.props.error)
 
 		return (
 			<div>
