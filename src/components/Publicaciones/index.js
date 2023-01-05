@@ -5,7 +5,7 @@ import Spinner from "../General/Spinner"
 import Fatal from "../General/Fatal"
 import * as usuariosActions from "../../actions/usuariosActions"
 import * as publicacionesActions from "../../actions/publicacionesActions"
-import { usuariosReductor } from "../../reducers/usuariosReducers"
+// import { usuariosReductor } from "../../reducers/usuariosReducers"
 import Comentarios  from "./Comentarios"
 
 const {traerTodos:usuariosTraerTodos}=usuariosActions
@@ -15,7 +15,6 @@ const {traerPorUsuario:publicacionesTraerPorUsuario,
 
 const Publicaciones=(props)=>  {
     const {key}=useParams()
-    console.log(key)
     useEffect(()=>{
         async function traerTodosUsuarios(){
             if(!props.usuariosReductor.usuarios.length){
