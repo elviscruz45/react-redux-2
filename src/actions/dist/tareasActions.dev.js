@@ -3,9 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.editar = exports.agregar = exports.cambioTitulo = exports.cambioUsuarioId = exports.traerTodas = void 0;
+exports.limpiarForma = exports.eliminar = exports.cambioCheck = exports.editar = exports.agregar = exports.cambioTitulo = exports.cambioUsuarioId = exports.traerTodas = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
+
+var _testUtils = require("react-dom/test-utils");
 
 var _tareasTypes = require("../types/tareasTypes");
 
@@ -105,7 +107,7 @@ var agregar = function agregar(nueva_tarea) {
             console.log(respuesta.data);
             console.log("agregado a la API");
             dispatch({
-              type: _tareasTypes.AGREGADA
+              type: _tareasTypes.GUARDAR
             });
             _context2.next = 14;
             break;
@@ -131,9 +133,116 @@ var agregar = function agregar(nueva_tarea) {
 exports.agregar = agregar;
 
 var editar = function editar(tarea_editada) {
-  return function (dispatch) {
-    console.log(tarea_editada);
+  return function _callee3(dispatch) {
+    var respuesta;
+    return regeneratorRuntime.async(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            dispatch({
+              type: _tareasTypes.CARGANDO
+            });
+            _context3.prev = 1;
+            _context3.next = 4;
+            return regeneratorRuntime.awrap(_axios["default"].put("https://jsonplaceholder.typicode.com/todos/".concat(tarea_editada.id), tarea_editada));
+
+          case 4:
+            respuesta = _context3.sent;
+            dispatch({
+              type: _tareasTypes.GUARDAR
+            });
+            _context3.next = 12;
+            break;
+
+          case 8:
+            _context3.prev = 8;
+            _context3.t0 = _context3["catch"](1);
+            console.log(_context3.t0.message);
+            dispatch({
+              type: _tareasTypes.ERROR,
+              payload: "Intente mas tarde"
+            });
+
+          case 12:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, null, null, [[1, 8]]);
   };
 };
 
 exports.editar = editar;
+
+var cambioCheck = function cambioCheck(usu_id, tar_id) {
+  return function (dispatch, getState) {
+    var tareas = getState().tareasReductor.tareas;
+    var seleccionada = tareas[usu_id][tar_id];
+
+    var actualizadas = _objectSpread({}, tareas);
+
+    actualizadas[usu_id] = _objectSpread({}, tareas[usu_id]);
+    actualizadas[usu_id][tar_id] = _objectSpread({}, tareas[usu_id][tar_id], {
+      completed: !seleccionada.completed
+    });
+    dispatch({
+      type: _tareasTypes.ACTUALIZAR,
+      payload: actualizadas
+    });
+  };
+};
+
+exports.cambioCheck = cambioCheck;
+
+var eliminar = function eliminar(tar_id) {
+  return function _callee4(dispatch) {
+    var respuesta;
+    return regeneratorRuntime.async(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            dispatch({
+              type: _tareasTypes.CARGANDO
+            });
+            _context4.prev = 1;
+            _context4.next = 4;
+            return regeneratorRuntime.awrap(_axios["default"]["delete"]("https://jsonplaceholder.typicode.com/todos/".concat(tar_id)));
+
+          case 4:
+            respuesta = _context4.sent;
+            dispatch({
+              type: _tareasTypes.TRAER_TODAS,
+              payload: {}
+            });
+            _context4.next = 12;
+            break;
+
+          case 8:
+            _context4.prev = 8;
+            _context4.t0 = _context4["catch"](1);
+            console.log(_context4.t0.message);
+            dispatch({
+              type: _tareasTypes.ERROR,
+              payload: "Servicio no disponible"
+            });
+
+          case 12:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, null, null, [[1, 8]]);
+  };
+};
+
+exports.eliminar = eliminar;
+
+var limpiarForma = function limpiarForma() {
+  return function (dispatch) {
+    dispatch({
+      type: _tareasTypes.LIMPIAR
+    });
+  };
+};
+
+exports.limpiarForma = limpiarForma;

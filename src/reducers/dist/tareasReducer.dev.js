@@ -56,12 +56,23 @@ var tareasReductor = function tareasReductor() {
         titulo: action.payload
       });
 
-    case _tareasTypes.AGREGADA:
+    case _tareasTypes.GUARDAR:
       return _objectSpread({}, state, {
         tareas: {},
         cargando: false,
         error: "",
         regresar: true,
+        usuario_id: "",
+        titulo: ""
+      });
+
+    case _tareasTypes.ACTUALIZAR:
+      return _objectSpread({}, state, {
+        tareas: action.payload
+      });
+
+    case _tareasTypes.LIMPIAR:
+      return _objectSpread({}, state, {
         usuario_id: "",
         titulo: ""
       });
